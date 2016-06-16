@@ -7,7 +7,7 @@
 //
 
 #import <UIKit/UIKit.h>
-
+#import "CustomBannerView.h"
 @interface ViewController : UIViewController
 
 
