@@ -19,8 +19,8 @@ typedef NS_ENUM(NSInteger, PageControlLocation) {
 
 @property (nonatomic,assign)NSTimeInterval stayInteval;
 @property (nonatomic,assign)NSTimeInterval scrollInterval;
+@property (nonatomic,assign)BOOL autoScroll;//是否可以滚动
 @property (nonatomic,weak)id delegate;
-@property (nonatomic,strong)UIPageControl *pageControl;
 
 /**
  *  初始化一个banner

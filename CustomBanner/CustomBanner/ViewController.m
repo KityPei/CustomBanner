@@ -7,7 +7,7 @@
 //
 
 #import "ViewController.h"
-
+#import "CustomBannerView.h"
 @interface ViewController ()
 
 @end
@@ -18,8 +18,11 @@
     [super viewDidLoad];
     // Do any additional setup after loading the view, typically from a nib.
     
+    CustomBannerView *customView = [[CustomBannerView alloc] initWithFrame:CGRectMake(0, 0, DEVICE_WIDTH, 300) andImageList:@[@"01.jpg",@"02.jpg"] withPageControlLocation:LocationAtCenter];
+//    customView.autoScroll = YES;
     
-    
+    customView.backgroundColor = [UIColor redColor];
+    [self.view addSubview:customView];
     
     
     

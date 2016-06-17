@@ -9,6 +9,8 @@
 /* Begin PBXBuildFile section */
 		54729FEE6DC6AD11BC104BBB /* libPods.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 8CF270ED3BDE95BFD5C56CC9 /* libPods.a */; };
 		E508E9AC1D01638A00E09686 /* CustomBannerView.m in Sources */ = {isa = PBXBuildFile; fileRef = E508E9AB1D01638A00E09686 /* CustomBannerView.m */; };
+		E581FE311D13C63700DB5332 /* 01.jpg in Resources */ = {isa = PBXBuildFile; fileRef = E581FE2F1D13C63700DB5332 /* 01.jpg */; };
+		E581FE321D13C63700DB5332 /* 02.jpg in Resources */ = {isa = PBXBuildFile; fileRef = E581FE301D13C63700DB5332 /* 02.jpg */; };
 		E5DE2A321CFF3E260008CF9F /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = E5DE2A311CFF3E260008CF9F /* main.m */; };
 		E5DE2A351CFF3E260008CF9F /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = E5DE2A341CFF3E260008CF9F /* AppDelegate.m */; };
 		E5DE2A381CFF3E260008CF9F /* ViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = E5DE2A371CFF3E260008CF9F /* ViewController.m */; };
@@ -35,6 +37,8 @@
 		E504B6631D047B77003B8D92 /* CustomBanner_Prefix.pch */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CustomBanner_Prefix.pch; sourceTree = "<group>"; };
 		E508E9AA1D01638A00E09686 /* CustomBannerView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CustomBannerView.h; sourceTree = "<group>"; };
 		E508E9AB1D01638A00E09686 /* CustomBannerView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CustomBannerView.m; sourceTree = "<group>"; };
+		E581FE2F1D13C63700DB5332 /* 01.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = 01.jpg; sourceTree = "<group>"; };
+		E581FE301D13C63700DB5332 /* 02.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = 02.jpg; sourceTree = "<group>"; };
 		E5DE2A2D1CFF3E260008CF9F /* CustomBanner.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = CustomBanner.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		E5DE2A311CFF3E260008CF9F /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
 		E5DE2A331CFF3E260008CF9F /* AppDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AppDelegate.h; sourceTree = "<group>"; };
@@ -122,6 +126,8 @@
 				E5DE2A341CFF3E260008CF9F /* AppDelegate.m */,
 				E5DE2A361CFF3E260008CF9F /* ViewController.h */,
 				E5DE2A371CFF3E260008CF9F /* ViewController.m */,
+				E581FE2F1D13C63700DB5332 /* 01.jpg */,
+				E581FE301D13C63700DB5332 /* 02.jpg */,
 				E508E9A91D01634200E09686 /* Banner */,
 				E5DE2A391CFF3E260008CF9F /* Main.storyboard */,
 				E5DE2A3C1CFF3E260008CF9F /* Assets.xcassets */,
@@ -233,8 +239,10 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				E581FE321D13C63700DB5332 /* 02.jpg in Resources */,
 				E5DE2A401CFF3E260008CF9F /* LaunchScreen.storyboard in Resources */,
 				E5DE2A3D1CFF3E260008CF9F /* Assets.xcassets in Resources */,
+				E581FE311D13C63700DB5332 /* 01.jpg in Resources */,
 				E5DE2A3B1CFF3E260008CF9F /* Main.storyboard in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

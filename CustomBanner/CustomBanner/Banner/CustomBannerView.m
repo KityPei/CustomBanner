@@ -16,67 +16,64 @@ static NSTimeInterval const kDefaultStayInterval = 2.0;
 //滚动的时长
 static NSTimeInterval const kDefaultScrollInterval = 0.7;
 
+static CGFloat const kMargin = 10.0f;
+
 @interface CustomBannerView ()<UIScrollViewDelegate>
 {
     NSInteger totalOfIndex;//总个数
     NSInteger currentIndex;//当前个数
-    BOOL scrollTowardsToRight;
+    BOOL scrollTowardsToRight;//是否自左而右
 }
 @property (nonatomic,strong)UIScrollView *bannerScroll;
-@property (nonatomic,assign)BOOL autoScroll;//是否可以滚动
+@property (nonatomic,strong)UIPageControl *pageControl;
 @property (nonatomic,strong)NSTimer *timer;
 
 @end
 
 @implementation CustomBannerView
 
-/**
- *  创建banner
- *
- *  @param frame     UIScrollView的frame
- *  @param ImageList banner上的图片数组，
- *  @param location  pagecontrol的位置，可为左中右，贴底10px
- *
- *  @return banner
- */
 - (instancetype)initWithFrame:(CGRect)frame andImageList:(NSArray *)ImageList withPageControlLocation:(PageControlLocation)location
 {
     self = [super initWithFrame:frame];
     if (self) {
         
+        self.clipsToBounds = YES;
         
         scrollTowardsToRight = YES;
         
-        totalOfIndex = ImageList.count+1;
-        currentIndex = 0;
+        totalOfIndex = ImageList.count;//计算一共有多少页
+        currentIndex = 0;//pagecontrol选取当前页
         _bannerScroll = [[UIScrollView alloc] initWithFrame:frame];
         _bannerScroll.delegate = self;
         _bannerScroll.pagingEnabled = YES;
         _bannerScroll.showsHorizontalScrollIndicator = NO;
         [self addSubview:_bannerScroll];
         
-        _bannerScroll.contentSize = CGSizeMake(frame.size.width*(totalOfIndex-1), frame.size.height);
+        _bannerScroll.contentSize = CGSizeMake(frame.size.width*totalOfIndex, frame.size.height);
         
-        if (ImageList.count > 0) {
-            if (location == LocationAtLeft) {
-                self.pageControl.frame = CGRectMake(10, DEVICE_WIDTH-kBannerPageControlHeight-10, kBannerPageControlWidth, kBannerPageControlHeight);
+        if (location) {
+            if (ImageList.count > 0) {
+                if (location == LocationAtLeft) {
+                    self.pageControl.frame = CGRectMake(kMargin, frame.size.height-kBannerPageControlHeight-kMargin, kBannerPageControlWidth, kBannerPageControlHeight);
+                }
+                else if (location == LocationAtRight)
+                {
+                    self.pageControl.frame = CGRectMake(DEVICE_WIDTH-10-kBannerPageControlWidth, frame.size.height-kBannerPageControlHeight-kMargin, kBannerPageControlWidth, kBannerPageControlHeight);
+                }
+                else
+                {
+                    self.pageControl.frame = CGRectMake((DEVICE_WIDTH-kBannerPageControlWidth)/2, frame.size.height-kBannerPageControlHeight-kMargin, kBannerPageControlWidth, kBannerPageControlHeight);
+                }
+                [self setImageViewBy:ImageList];
             }
-            else if (location == LocationAtRight)
+            else if(!ImageList||ImageList.count == 0)
             {
-                self.pageControl.frame = CGRectMake(DEVICE_WIDTH-10-kBannerPageControlWidth, frame.size.height-kBannerPageControlHeight-10, kBannerPageControlWidth, kBannerPageControlHeight);
+                UIImageView *imageView = [[UIImageView alloc] initWithFrame:frame];
+                imageView.image = [UIImage imageNamed:DEFAULT_IMAGE];
+                [_bannerScroll addSubview:imageView];
             }
-            else
-            {
-                self.pageControl.frame = CGRectMake((DEVICE_WIDTH-kBannerPageControlWidth)/2, frame.size.height-kBannerPageControlHeight-10, kBannerPageControlWidth, kBannerPageControlHeight);
-            }
-            [self setImageViewBy:ImageList];
         }
-        else
-        {
-            UIImageView *imageView = [[UIImageView alloc] initWithFrame:frame];
-            imageView.image = [UIImage imageNamed:DEFAULT_IMAGE];
-            [_bannerScroll addSubview:imageView];
-        }
+        
     }
     return self;
 }
@@ -87,7 +84,7 @@ static NSTimeInterval const kDefaultScrollInterval = 0.7;
     if (!_pageControl) {
         _pageControl = [[UIPageControl alloc] init];
         _pageControl.backgroundColor = [UIColor clearColor];
-        _pageControl.numberOfPages = totalOfIndex-1;
+        _pageControl.numberOfPages = totalOfIndex;
         _pageControl.currentPage = 0;
         _pageControl.currentPageIndicatorTintColor = [UIColor whiteColor];
         [_pageControl addTarget:self action:@selector(pageControlClicked:) forControlEvents:UIControlEventValueChanged];
@@ -110,7 +107,6 @@ static NSTimeInterval const kDefaultScrollInterval = 0.7;
             imageView.image = [UIImage imageNamed:imageName];
         }
         [_bannerScroll addSubview:imageView];
-        
     }
 }
 
@@ -120,6 +116,7 @@ static NSTimeInterval const kDefaultScrollInterval = 0.7;
     //实现点击翻页
 }
 
+//启动定时器
 - (void)triggerTimer
 {
     if (self.timer) {
@@ -151,6 +148,11 @@ static NSTimeInterval const kDefaultScrollInterval = 0.7;
     }
 }
 
+/**
+ *  定时器绑定的方法
+ *
+ *  @param timer 定时器
+ */
 - (void)autoScroll:(NSTimer *)timer
 {
     if (totalOfIndex==1) {
@@ -158,16 +160,17 @@ static NSTimeInterval const kDefaultScrollInterval = 0.7;
     }
     else
     {
-        if (currentIndex==totalOfIndex-1) {
-            scrollTowardsToRight = NO;
+        if (currentIndex == totalOfIndex-1 || currentIndex == 0) {
+            scrollTowardsToRight = !scrollTowardsToRight;
         }
-        if (currentIndex == 0) {
-            scrollTowardsToRight = YES;
-        }
+        
         [self setMyAnimate];
     }
 }
 
+/**
+ *  定时器启动后scroll和pagecontrol的效果
+ */
 - (void)setMyAnimate
 {
     NSTimeInterval interval = kDefaultScrollInterval;
@@ -195,14 +198,21 @@ static NSTimeInterval const kDefaultScrollInterval = 0.7;
     }
 }
 
+/**
+ *  开启定时器
+ */
 - (void)startAutoScoll
 {
+    self.autoScroll = YES;
     if (!self.autoScroll && totalOfIndex > 1) {
         currentIndex = 1;
         [self triggerTimer];
     }
 }
 
+/**
+ *  关闭定时器
+ */
 - (void)stopTimer
 {
     [self.timer invalidate];
